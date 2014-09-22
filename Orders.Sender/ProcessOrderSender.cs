@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using NServiceBus;
 using Orders.Messages;
 
@@ -10,9 +11,16 @@ namespace Orders.Sender
 
         public void Start()
         {
-            Console.WriteLine("Press 'Enter' to send a bulk of messages. To exit, Ctrl + C");
+            Console.WriteLine("Press 'm' to send a bulk of messages, press 's' to send a bulk of messages that inits a saga. To exit, Ctrl + C");
 
-            while (Console.ReadLine() != null)
+            while (Console.ReadLine() != "m")
+            {
+                Console.WriteLine("Starting to send 40k messages");
+                SendBulk();
+                Console.WriteLine("Done sending 40k messages");
+            }
+
+            while (Console.ReadLine() != "s")
             {
                 Console.WriteLine("Starting to send 40k messages");
                 SendBulk();
@@ -22,15 +30,28 @@ namespace Orders.Sender
 
         private void SendBulk()
         {
-            int counter = 0;
+          
 
-            for (int i = 0; i < 40000; i++)
+            Parallel.For(0, 40000, i=>
             {
-                counter++;
-                var placeOrder = new PlaceOrder {OrderId = "order" + counter};
+               
+                var placeOrder = new PlaceOrder {OrderId = "order" + i};
                 Bus.Send(placeOrder).Register(PlaceOrderReturnCodeHandler, this);
                 Console.WriteLine(string.Format("Sent PlacedOrder command with order id [{0}].", placeOrder.OrderId));
-            }
+            });
+        }
+
+        private void SendBulkSaga()
+        {
+
+
+            Parallel.For(0, 40000, i =>
+            {
+
+                var placeOrder = new PlaceOrderSaga { OrderId = "order" + i };
+                Bus.Send(placeOrder).Register(PlaceOrderReturnCodeHandler, this);
+                Console.WriteLine(string.Format("Sent PlacedOrderSaga command with order id [{0}].", placeOrder.OrderId));
+            });
         }
 
         private static void PlaceOrderReturnCodeHandler(IAsyncResult asyncResult)

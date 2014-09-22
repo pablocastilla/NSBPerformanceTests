@@ -1,4 +1,6 @@
-﻿using NServiceBus;
+﻿using System;
+using System.Configuration;
+using NServiceBus;
 
 namespace Orders.Handler
 {
@@ -8,15 +10,17 @@ namespace Orders.Handler
     {
         public void Init()
         {
-            //uncomment one of the following lines if you want to use the fluent api instead. Remember to 
-            // remove the "Master" profile from the command line Properties->Debug
-            //Configure.Instance.RunDistributor();
+            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["DTCEnabled"]))
+            {
+                Console.Out.WriteLine("DTC disabled");
 
-            //or if you want to run the distributor only and no worker
-            //Configure.Instance.RunDistributorWithNoWorkerOnItsEndpoint();
+                Configure.Transactions.Advanced(settings =>
+                {
+                    settings.DisableDistributedTransactions();
+                    settings.DefaultTimeout(TimeSpan.FromSeconds(120));
+                });
+            }
 
-            //or if you want to be a worker
-            //Configure.Instance.EnlistWithDistributor();
         }
     }
 }
