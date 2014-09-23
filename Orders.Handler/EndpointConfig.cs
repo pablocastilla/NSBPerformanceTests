@@ -4,9 +4,7 @@ using NServiceBus;
 
 namespace Orders.Handler
 {
-    class EndpointConfig : IConfigureThisEndpoint, AsA_Publisher { }
-    
-    class ConfiguringTheDistributorWithTheFluentApi : INeedInitialization
+    class EndpointConfig : IConfigureThisEndpoint, AsA_Publisher, IWantCustomInitialization
     {
         public void Init()
         {
@@ -23,4 +21,6 @@ namespace Orders.Handler
 
         }
     }
+
+  
 }

@@ -9,7 +9,7 @@ namespace Orders.Handler
   
     public class ProcessOrderCommandHandler : IHandleMessages<PlaceOrder>
     {
-        public static Velocimeter accelerometer = new Velocimeter();
+        Velocimeter accelerometer = Velocimeter.getInstance();
 
         public IBus Bus { get; set; }
         public void Handle(PlaceOrder placeOrder)

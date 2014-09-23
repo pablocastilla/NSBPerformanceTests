@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using NServiceBus;
 using Orders.Messages;
+using Utils;
 
 namespace Orders.Sender
 {
@@ -9,47 +10,51 @@ namespace Orders.Sender
     {
         public IBus Bus { get; set; }
 
+        public int NUMBEROFMESSAGES = 40000;
+
         public void Start()
         {
             Console.WriteLine("Press 'm' to send a bulk of messages, press 's' to send a bulk of messages that inits a saga. To exit, Ctrl + C");
 
-            while (Console.ReadLine() != "m")
+
+
+            Velocimeter accelerometer = Velocimeter.getInstance(NUMBEROFMESSAGES);
+
+            var option = Console.ReadLine();
+
+            if (option == "m")
             {
+                
                 Console.WriteLine("Starting to send 40k messages");
-                SendBulk();
+                SendBulk(NUMBEROFMESSAGES);
                 Console.WriteLine("Done sending 40k messages");
             }
 
-            while (Console.ReadLine() != "s")
+             if (option == "s")
             {
                 Console.WriteLine("Starting to send 40k messages");
-                SendBulk();
+                SendBulkSaga(NUMBEROFMESSAGES);
                 Console.WriteLine("Done sending 40k messages");
             }
         }
 
-        private void SendBulk()
+        private void SendBulk(int numberOfMessages)
         {
-          
 
-            Parallel.For(0, 40000, i=>
-            {
-               
+            Parallel.For(0, numberOfMessages, i =>
+            {               
                 var placeOrder = new PlaceOrder {OrderId = "order" + i};
-                Bus.Send(placeOrder).Register(PlaceOrderReturnCodeHandler, this);
+                Bus.Send(placeOrder);//.Register(PlaceOrderReturnCodeHandler, this);
                 Console.WriteLine(string.Format("Sent PlacedOrder command with order id [{0}].", placeOrder.OrderId));
             });
         }
 
-        private void SendBulkSaga()
-        {
-
-
-            Parallel.For(0, 40000, i =>
+        private void SendBulkSaga(int numberOfMessages)
+        {            
+            Parallel.For(0, numberOfMessages, i =>
             {
-
                 var placeOrder = new PlaceOrderSaga { OrderId = "order" + i };
-                Bus.Send(placeOrder).Register(PlaceOrderReturnCodeHandler, this);
+                Bus.Send(placeOrder);//.Register(PlaceOrderReturnCodeHandler, this);
                 Console.WriteLine(string.Format("Sent PlacedOrderSaga command with order id [{0}].", placeOrder.OrderId));
             });
         }

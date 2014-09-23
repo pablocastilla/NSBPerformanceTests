@@ -22,7 +22,7 @@ namespace Orders.Handler
 
     public class ProcessOrderSaga : Saga<ProcessOrderSagaData>, IAmStartedByMessages<PlaceOrderSaga>
     {
-        public static Velocimeter accelerometer = new Velocimeter();
+         Velocimeter accelerometer = Velocimeter.getInstance();
 
      
         public void Handle(PlaceOrderSaga placeOrder)
