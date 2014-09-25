@@ -15,6 +15,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orders.Handler.Worker2", "O
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{716D3318-D2A8-4206-90EC-6C122E05C4CC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{AE677EE3-1002-4D4A-B86C-AA285FD727DB}"
+	ProjectSection(SolutionItems) = preProject
+		Scripts\ConfigureNServiceBus.ps1 = Scripts\ConfigureNServiceBus.ps1
+		Scripts\InstallDistributors.ps1 = Scripts\InstallDistributors.ps1
+		Scripts\InstallWorkers.ps1 = Scripts\InstallWorkers.ps1
+		Scripts\ModifyMaximumConcurrencyLevel.ps1 = Scripts\ModifyMaximumConcurrencyLevel.ps1
+		Scripts\StartServices.ps1 = Scripts\StartServices.ps1
+		Scripts\StopServices.ps1 = Scripts\StopServices.ps1
+		Scripts\UninstallServices.ps1 = Scripts\UninstallServices.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

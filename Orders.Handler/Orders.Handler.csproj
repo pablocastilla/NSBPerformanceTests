@@ -78,4 +78,11 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>XCOPY "$(TargetDir)*.dll" "C:\NSBPerformanceTests\Instalacion\$(ProjectName)\" /Y
+XCOPY "$(TargetDir)*.exe" "C:\NSBPerformanceTests\Instalacion\$(ProjectName)\" /Y
+XCOPY "$(TargetDir)*.pdb" "C:\NSBPerformanceTests\Instalacion\$(ProjectName)\" /Y
+XCOPY "$(TargetDir)*.config" "C:\NSBPerformanceTests\Instalacion\$(ProjectName)\" /Y
+XCOPY "$(TargetDir)*.xml" "C:\NSBPerformanceTests\Instalacion\$(ProjectName)\" /Y</PostBuildEvent>
+  </PropertyGroup>
 </Project>
