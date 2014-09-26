@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Threading.Tasks;
 using NServiceBus;
 using Orders.Messages;
@@ -10,7 +11,7 @@ namespace Orders.Sender
     {
         public IBus Bus { get; set; }
 
-        public int NUMBEROFMESSAGES = 40000;
+        public int NUMBEROFMESSAGES = Convert.ToInt32(ConfigurationManager.AppSettings["MESSAGES"]);
 
         public void Start()
         {

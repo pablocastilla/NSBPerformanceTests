@@ -9,6 +9,7 @@ namespace Orders.Handler
     using NServiceBus.Saga;
     using Utils;
     using NServiceBus.Logging;
+    using System.Configuration;
    
 
 
@@ -41,9 +42,14 @@ namespace Orders.Handler
 
             // Process Order...
            // Console.Out.WriteLine("Processing received order....");
-            
-            Bus.Publish<OrderPlaced>(m => m.OrderId = placeOrder.OrderId);
+
+            if (Convert.ToBoolean(ConfigurationManager.AppSettings["EmitEvent"]))
+            {
+                Bus.Publish<OrderPlaced>(m => m.OrderId = placeOrder.OrderId);
+            }
             // Console.Out.WriteLine("Sent Order placed event for orderId [{0}].", placeOrder.OrderId);
+
+            System.Threading.Thread.Sleep(Convert.ToInt32(ConfigurationManager.AppSettings["ThreadStopTime"]));
 
             accelerometer.IncrementMessages();
            // Console.Out.WriteLine("MSGs/Seconds [{0}].", accelerometer.GetSpeed());
