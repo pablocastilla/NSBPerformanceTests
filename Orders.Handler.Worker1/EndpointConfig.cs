@@ -1,5 +1,5 @@
 
-namespace rootnamespace
+namespace Orders.Handler.Worker1
 {
     using NServiceBus;
 

@@ -60,5 +60,10 @@ namespace Orders.Handler
 
             this.MarkAsComplete();
         }
+
+        protected override void ConfigureHowToFindSaga(SagaPropertyMapper<ProcessOrderSagaData> mapper)
+        {
+           
+        }
     }
 }

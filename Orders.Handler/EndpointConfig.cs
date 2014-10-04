@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Configuration;
 using NServiceBus;
+using NServiceBus.Persistence;
 
 namespace Orders.Handler
 {
-    class EndpointConfig : IConfigureThisEndpoint, AsA_Publisher, IWantCustomInitialization
+    class EndpointConfig : IConfigureThisEndpoint, AsA_Server
     {
-        public void Init()
+        public void Customize(BusConfiguration configuration)
         {
             if (!Convert.ToBoolean(ConfigurationManager.AppSettings["DTCEnabled"]))
             {
                 Console.Out.WriteLine("DTC disabled");
 
-                Configure.Transactions.Advanced(settings =>
-                {
-                    settings.DisableDistributedTransactions();
-                    settings.DefaultTimeout(TimeSpan.FromSeconds(120));
-                });
+                configuration.UsePersistence<RavenDBPersistence>();
+                configuration.Transactions().DisableDistributedTransactions();
             }
 
         }
