@@ -9,8 +9,8 @@ Proyect for quick evaluating the performance of a NServiceBus installation
 If the worker is configured using the NServiceBus.Distributor.MSMQ NuGet there is a PowerShell functionallity that can be use to remove a Worker from a Distributor. The steps are the following:
 
 1. Load the [NServiceBus PowerShell CmdLet](managing-nservicebus-using-powershell.md) and execute Remove-NServiceBusMSMQWorker WorkerAddress DistributorAddress
---* The WorkerAddress = the worker queue name, eg Worker@localhost
---* The DistributorAddress = the distributor queue name eg MyDistributor@localhost, Note: you just pass the distributor queue name, the PS script automatically appends ".distributor.control" to the end of the distributor queue.
+* The WorkerAddress = the worker queue name, eg Worker@localhost
+* The DistributorAddress = the distributor queue name eg MyDistributor@localhost, Note: you just pass the distributor queue name, the PS script automatically appends ".distributor.control" to the end of the distributor queue.
 
 2. Wait for worker to drain all queued messages in its input queue.
 3. Shutdown the endpoint.
