@@ -13,10 +13,11 @@ namespace Orders.Handler
             {
                 Console.Out.WriteLine("DTC disabled");
 
-                configuration.UsePersistence<RavenDBPersistence>();
+               
                 configuration.Transactions().DisableDistributedTransactions();
             }
 
+            configuration.UsePersistence<InMemoryPersistence>();
         }
     }
 

@@ -55,7 +55,7 @@ namespace Orders.Handler
            // Console.Out.WriteLine("MSGs/Seconds [{0}].", accelerometer.GetSpeed());
 
 
-            if (placeOrder.OrderId.EndsWith("0"))
+            if (placeOrder.OrderId.EndsWith("00"))
                 Logger.Warn(string.Format("MSGs/Seconds [{0}].", accelerometer.GetSpeed()));
 
             this.MarkAsComplete();

@@ -46,8 +46,10 @@ namespace Orders.Sender
             {               
                 var placeOrder = new PlaceOrder {OrderId = "order" + i};
                 Bus.Send(placeOrder);//.Register(PlaceOrderReturnCodeHandler, this);
-                Console.WriteLine(string.Format("Sent PlacedOrder command with order id [{0}].", placeOrder.OrderId));
+              
             });
+
+            Console.WriteLine(string.Format("Commands for handlers sent"));
         }
 
         private void SendBulkSaga(int numberOfMessages)
@@ -56,8 +58,10 @@ namespace Orders.Sender
             {
                 var placeOrder = new PlaceOrderSaga { OrderId = "order" + i };
                 Bus.Send(placeOrder);//.Register(PlaceOrderReturnCodeHandler, this);
-                Console.WriteLine(string.Format("Sent PlacedOrderSaga command with order id [{0}].", placeOrder.OrderId));
+               
             });
+
+            Console.WriteLine(string.Format("Commands for sagas sent"));
         }
 
         private static void PlaceOrderReturnCodeHandler(IAsyncResult asyncResult)

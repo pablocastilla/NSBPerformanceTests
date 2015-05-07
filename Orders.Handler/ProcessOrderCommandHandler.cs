@@ -24,7 +24,7 @@ namespace Orders.Handler
             // Process Order...
             // Console.Out.WriteLine("Processing received order....");
 
-            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["EmitEvent"]))
+            if (Convert.ToBoolean(ConfigurationManager.AppSettings["EmitEvent"]))
             {
                 Bus.Publish<OrderPlaced>(m => m.OrderId = placeOrder.OrderId);
             }
@@ -36,7 +36,7 @@ namespace Orders.Handler
             // Console.Out.WriteLine("MSGs/Seconds [{0}].", accelerometer.GetSpeed());
 
 
-            if (placeOrder.OrderId.EndsWith("0"))
+            if (placeOrder.OrderId.EndsWith("00"))
                 Logger.Warn(string.Format("MSGs/Seconds [{0}].", accelerometer.GetSpeed()));
 
 
