@@ -13,8 +13,12 @@ namespace Orders.Handler
             {
                 Console.Out.WriteLine("DTC disabled");
 
-               
+
                 configuration.Transactions().DisableDistributedTransactions();
+            }
+            else
+            {
+                Console.Out.WriteLine("DTC enabled");
             }
 
             configuration.UsePersistence<InMemoryPersistence>();
